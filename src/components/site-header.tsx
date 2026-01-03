@@ -1,27 +1,30 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Moon, Sun, Menu } from "lucide-react"
-import { useTheme } from "next-themes"
-import { Button } from "@/components/button"
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
-} from "@/components/ui/dropdown-menu"
-import { useState } from "react"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Moon, Sun, Menu, Laptop } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useState } from "react";
 
 interface SiteHeaderProps {
-  currentLanguage: string
-  onLanguageChange: (lang: string) => void
+  currentLanguage: string;
+  onLanguageChange: (lang: string) => void;
 }
 
-export function SiteHeader({ currentLanguage, onLanguageChange }: SiteHeaderProps) {
-  const { setTheme } = useTheme()
-  const pathname = usePathname()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+export function SiteHeader({
+  currentLanguage,
+  onLanguageChange,
+}: SiteHeaderProps) {
+  const { setTheme } = useTheme();
+  const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -30,7 +33,7 @@ export function SiteHeader({ currentLanguage, onLanguageChange }: SiteHeaderProp
           <Link href="/" className="flex items-center space-x-2">
             <span className="text-xl font-bold">My Blog</span>
           </Link>
-          
+
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-6">
             <Link
@@ -44,7 +47,9 @@ export function SiteHeader({ currentLanguage, onLanguageChange }: SiteHeaderProp
             <Link
               href="/blog"
               className={`text-sm font-medium transition-colors hover:text-primary ${
-                pathname?.startsWith("/blog") ? "text-foreground" : "text-muted-foreground"
+                pathname?.startsWith("/blog")
+                  ? "text-foreground"
+                  : "text-muted-foreground"
               }`}
             >
               Blog
@@ -72,7 +77,9 @@ export function SiteHeader({ currentLanguage, onLanguageChange }: SiteHeaderProp
                 Dark
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme("system")}>
-                <span className="mr-2 h-4 w-4 flex items-center justify-center">💻</span>
+                <span className="mr-2 h-4 w-4 flex items-center justify-center">
+                  <Laptop />
+                </span>
                 System
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -102,5 +109,5 @@ export function SiteHeader({ currentLanguage, onLanguageChange }: SiteHeaderProp
         </div>
       </div>
     </header>
-  )
+  );
 }
