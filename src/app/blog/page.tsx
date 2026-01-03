@@ -1,12 +1,11 @@
-import Link from "next/link"
-import { getAllPosts } from "@/lib/blog"
-import { Badge } from "@/components/ui/badge"
-import { BlogLayout } from "@/components/blog-layout"
-import { Calendar, Clock } from "lucide-react"
+import Link from "next/link";
+import { getAllPosts } from "@/lib/blog";
+import { Badge } from "@/components/ui/badge";
+import { BlogLayout } from "@/components/blog-layout";
+import { Calendar, Clock } from "lucide-react";
 
 export default async function BlogListPage() {
-  const posts = await getAllPosts()
-
+  const posts = await getAllPosts();
   return (
     <BlogLayout>
       <div className="container max-w-screen-xl py-16 px-4">
@@ -27,34 +26,33 @@ export default async function BlogListPage() {
               <span className="text-3xl">📝</span>
             </div>
             <h3 className="text-lg font-semibold mb-2">No posts yet</h3>
-            <p className="text-muted-foreground">Check back soon for new content!</p>
+            <p className="text-muted-foreground">
+              Check back soon for new content!
+            </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4">
             {posts.map((post) => (
-              <Link 
-                key={post.slug} 
+              <Link
+                key={post.slug}
                 href={`/blog/${post.slug}`}
                 className="group"
               >
                 <article className="h-full flex flex-col bg-card border border-border rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-foreground/20 hover:-translate-y-1">
                   {/* Card Header with gradient */}
                   <div className="h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
-                  
+
                   <div className="flex-1 p-6 space-y-4">
                     {/* Meta Info */}
                     <div className="flex items-center justify-between gap-2 flex-wrap">
-                      <Badge 
-                        variant="secondary" 
-                        className="font-medium"
-                      >
+                      <Badge variant="secondary" className="font-medium">
                         {post.language === "km" ? "🇰🇭 ភាសាខ្មែរ" : "🇺🇸 English"}
                       </Badge>
                       <div className="flex items-center gap-1 text-xs text-muted-foreground">
                         <Calendar className="h-3 w-3" />
                         <time>
                           {new Date(post.date).toLocaleDateString(
-                            post.language === "km" ? "km-KH" : "en-US", 
+                            post.language === "km" ? "km-KH" : "en-US",
                             {
                               month: "short",
                               day: "numeric",
@@ -66,7 +64,7 @@ export default async function BlogListPage() {
                     </div>
 
                     {/* Title */}
-                    <h2 
+                    <h2
                       className={`text-2xl font-bold tracking-tight line-clamp-2 group-hover:text-primary transition-colors ${
                         post.language === "km" ? "font-khmer" : ""
                       }`}
@@ -75,7 +73,7 @@ export default async function BlogListPage() {
                     </h2>
 
                     {/* Description */}
-                    <p 
+                    <p
                       className={`text-muted-foreground line-clamp-3 leading-relaxed ${
                         post.language === "km" ? "font-khmer" : ""
                       }`}
@@ -87,17 +85,17 @@ export default async function BlogListPage() {
                     <div className="pt-2">
                       <span className="text-sm font-medium text-primary group-hover:underline inline-flex items-center gap-1">
                         Read more
-                        <svg 
-                          className="h-4 w-4 transition-transform group-hover:translate-x-1" 
-                          fill="none" 
-                          stroke="currentColor" 
+                        <svg
+                          className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                          fill="none"
+                          stroke="currentColor"
                           viewBox="0 0 24 24"
                         >
-                          <path 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round" 
-                            strokeWidth={2} 
-                            d="M9 5l7 7-7 7" 
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
                           />
                         </svg>
                       </span>
@@ -110,5 +108,5 @@ export default async function BlogListPage() {
         )}
       </div>
     </BlogLayout>
-  )
+  );
 }
