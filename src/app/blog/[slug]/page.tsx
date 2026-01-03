@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { getAllPosts, getPostBySlug } from "@/lib/blog"
 import { MarkdownRenderer } from "@/components/markdown-renderer"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Calendar, Clock } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/button"
 import { BlogLayout } from "@/components/blog-layout"
@@ -12,6 +12,12 @@ export async function generateStaticParams() {
   return posts.map((post) => ({
     slug: post.slug,
   }))
+}
+
+function estimateReadTime(content: string): number {
+  const wordsPerMinute = 200
+  const wordCount = content.trim().split(/\s+/).length
+  return Math.ceil(wordCount / wordsPerMinute)
 }
 
 export default async function BlogPostPage({
@@ -26,40 +32,80 @@ export default async function BlogPostPage({
     notFound()
   }
 
+  const readTime = estimateReadTime(post.content)
+
   return (
     <BlogLayout>
-      <article className="container max-w-screen-md py-12">
-        <Button variant="ghost" asChild className="mb-8">
+      <article className="container max-w-4xl mx-auto py-12 px-4">
+        {/* Back Button */}
+        <Button variant="ghost" asChild className="mb-8 -ml-2">
           <Link href="/blog" className="gap-2">
             <ArrowLeft className="h-4 w-4" />
             Back to Blog
           </Link>
         </Button>
 
-        <header className="mb-12 space-y-4">
-          <div className="flex items-center gap-2">
-            <Badge>{post.language === "km" ? "🇰🇭 Khmer" : "🇺🇸 English"}</Badge>
-            <time className="text-sm text-muted-foreground">
-              {new Date(post.date).toLocaleDateString(post.language === "km" ? "km-KH" : "en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
+        {/* Article Header */}
+        <header className="mb-12 space-y-6 pb-8 border-b">
+          {/* Meta Info */}
+          <div className="flex items-center gap-3 flex-wrap">
+            <Badge variant="secondary" className="font-medium">
+              {post.language === "km" ? "🇰🇭 ភាសាខ្មែរ" : "🇺🇸 English"}
+            </Badge>
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <div className="flex items-center gap-1.5">
+                <Calendar className="h-4 w-4" />
+                <time>
+                  {new Date(post.date).toLocaleDateString(
+                    post.language === "km" ? "km-KH" : "en-US", 
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  )}
+                </time>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Clock className="h-4 w-4" />
+                <span>{readTime} min read</span>
+              </div>
+            </div>
           </div>
-          <h1
-            className={`text-4xl md:text-5xl font-bold tracking-tight text-balance ${post.language === "km" ? "font-khmer" : ""}`}
-          >
-            {post.title}
-          </h1>
-          <p className={`text-xl text-muted-foreground text-balance ${post.language === "km" ? "font-khmer" : ""}`}>
-            {post.description}
-          </p>
+
+          {/* Title & Description */}
+          <div className="space-y-4">
+            <h1
+              className={`text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight ${
+                post.language === "km" ? "font-khmer" : ""
+              }`}
+            >
+              {post.title}
+            </h1>
+            <p 
+              className={`text-xl md:text-2xl text-muted-foreground leading-relaxed ${
+                post.language === "km" ? "font-khmer" : ""
+              }`}
+            >
+              {post.description}
+            </p>
+          </div>
         </header>
 
-        <div className={`prose prose-lg ${post.language === "km" ? "font-khmer" : ""}`}>
+        {/* Article Content */}
+        <div className={post.language === "km" ? "font-khmer" : ""}>
           <MarkdownRenderer content={post.content} />
         </div>
+
+        {/* Article Footer */}
+        <footer className="mt-16 pt-8 border-t">
+          <Button variant="outline" asChild>
+            <Link href="/blog" className="gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              Back to all posts
+            </Link>
+          </Button>
+        </footer>
       </article>
     </BlogLayout>
   )
