@@ -16,7 +16,7 @@ export default function HomePage() {
               <Link href="/blog">Read Articles</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link href="/blog?lang=km">អត្ថបទភាសាខ្មែរ</Link>
+              <Link href="/blog?lang=km">អត្ថបទភាjសាខ្មែរ</Link>
             </Button>
           </div>
         </div>

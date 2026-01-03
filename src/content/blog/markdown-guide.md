@@ -113,9 +113,6 @@ Use three dashes for a horizontal line:
 
 You can also use HTML in Markdown:
 
-<div style="padding: 1rem; background: #f0f0f0; border-radius: 0.5rem;">
-  This is HTML content inside Markdown!
-</div>
 
 ## Conclusion
 
