@@ -1,6 +1,6 @@
 ---
-title: "Your Post Title"
-description: "A brief description"
+title: "Jenkins Guidline"
+description: "Know more about Jenkins for you to research more."
 date: "2025-01-03"
 language: "en"
 ---
