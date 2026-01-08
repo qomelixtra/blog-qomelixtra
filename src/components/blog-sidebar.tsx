@@ -118,17 +118,21 @@ export function BlogSidebar({ posts }: BlogSidebarProps) {
       )}
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex md:w-64 flex-col border-r border-border bg-muted/30 min-h-[calc(100vh-4rem)] sticky top-16 overflow-y-auto">
-        <SidebarContent />
+      <aside className="hidden md:flex md:w-64 flex-col border-r border-border bg-muted/30 min-h-[calc(100vh-4rem)]">
+        <div className="overflow-y-auto">
+          <SidebarContent />
+        </div>
       </aside>
 
       {/* Mobile Sidebar */}
       <aside
-        className={`fixed top-16 left-0 h-[calc(100vh-4rem)] w-64 border-r border-border bg-muted/30 overflow-y-auto z-40 transition-transform duration-300 md:hidden ${
+        className={`fixed top-16 left-0 h-[calc(100vh-4rem)] w-64 border-r border-border bg-muted/30 z-40 transition-transform duration-300 md:hidden ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <SidebarContent />
+        <div className="overflow-y-auto h-full">
+          <SidebarContent />
+        </div>
       </aside>
     </>
   );

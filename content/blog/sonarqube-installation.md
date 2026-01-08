@@ -53,3 +53,22 @@ volumes:
  sonarqube_bundled-plugins:
  postgresql_data:
 ```
+---
+Config Nginx Reverse Proxy for Sonarqube
+```bash
+server {
+    listen 80;
+    server_name your-domain-name;
+
+    location / {
+        proxy_pass http://localhost:9001;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        # Configuration for working with websocket 
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
+```

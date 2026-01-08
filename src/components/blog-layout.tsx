@@ -15,9 +15,9 @@ export function BlogLayout({ children, posts = [] }: BlogLayoutProps) {
   return (
     <div className="relative min-h-screen flex flex-col">
       <SiteHeader currentLanguage="en" onLanguageChange={() => {}} />
-      <div className="flex-1 flex flex-col md:flex-row">
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
         {posts.length > 0 && <BlogSidebar posts={posts} />}
-        <main className="flex-1 overflow-y-auto w-full md:min-w-0">
+        <main className="flex-1 overflow-y-auto w-full md:min-w-0 h-[calc(100vh-4rem)]">
           {children}
         </main>
       </div>
