@@ -27,6 +27,7 @@ export default async function BlogPostPage({
 }) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
+  const allPosts = await getAllPosts();
 
   if (!post) {
     notFound();
@@ -35,8 +36,8 @@ export default async function BlogPostPage({
   const readTime = estimateReadTime(post.content);
 
   return (
-    <BlogLayout>
-      <article className="max-w-7xl mx-auto py-12 px-4">
+    <BlogLayout posts={allPosts}>
+      <article className="max-w-4xl mx-auto py-8 md:py-12 px-4 md:px-6">
         {/* Back Button */}
         <Button variant="ghost" asChild className="mb-8 -ml-2">
           <Link href="/blog" className="gap-2">

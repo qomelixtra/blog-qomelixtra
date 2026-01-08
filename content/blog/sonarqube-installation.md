@@ -3,14 +3,19 @@ title: "Sonarqube Installation"
 description: "This blog will tell you how to install sonarqube"
 date: "2026-01-08"
 language: "en"
+category: "SonarQube"
 ---
 
-## Docker comopose for sonarqube 
-create file name `docker-compose.yml` and pass this docker compose and run command 
+## Docker comopose for sonarqube
+
+create file name `docker-compose.yml` and pass this docker compose and run command
+
 ```bash
 docker compous up -d
 ```
+
 after run this command it will be pull image sonarqube and create container name sonarqube on port 9091
+
 ```bash
 services:
  sonarqube:
@@ -33,11 +38,11 @@ services:
    image: postgres:latest
    pull_policy: if_not_present
    environment:
-   # default database probably: postgres  
+   # default database probably: postgres
      - POSTGRES_USER=sonar
      - POSTGRES_PASSWORD=sonar@2023
    restart: always
-   # ports: 
+   # ports:
   #   - 5432
    volumes:
      - postgresql_data:/var/lib/postgresql

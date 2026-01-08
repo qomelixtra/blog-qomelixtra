@@ -3,11 +3,13 @@ title: "Jenkins config reverse proxy with nginx"
 description: "This is a blog, tell u how to config nginx reverse proxy with Jenkins on port 8081 and 5000"
 date: "2026-01-06"
 language: "en"
+category: "Jenkins"
 ---
 
 ## How to Config Reverse Proxy, support websocket, file uplaod, and header
 
 ### 1. Use For UI : 8081
+
 ```bash
 server {
     listen 80;
@@ -42,6 +44,7 @@ server {
 ```
 
 ### 2. Use For Registery : 5000
+
 ```bash
 server {
     listen 80;

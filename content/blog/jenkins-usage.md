@@ -3,6 +3,7 @@ title: "Jenkins Guidline"
 description: "Know more about Jenkins for you to research more."
 date: "2025-01-03"
 language: "en"
+category: "Jenkins"
 ---
 
 # Complete Jenkins Guide
@@ -20,9 +21,10 @@ language: "en"
 9. Best Practices
 10. Troubleshooting
 
---- 
+---
 
 ## 1. Introduction to Jenkins
+
 Jenkins is an open-source automation server that enables developers to build, test, and deploy their software reliably. It's the most widely used tool for continuous integration and continuous delivery (CI/CD).
 
 **Key Features:**

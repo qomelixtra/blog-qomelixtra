@@ -3,7 +3,6 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { BlogLayout } from "@/components/blog-layout";
 import { Calendar, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Post } from "@/lib/blog";
@@ -24,144 +23,139 @@ export function BlogListClient({ posts }: BlogListClientProps) {
   }, [posts, searchQuery]);
 
   return (
-    <BlogLayout>
-      <div className="w-full py-16 px-4">
-        <div className="max-w-screen-xl mx-auto">
-          {/* Hero Section */}
-          <div className="max-w-3xl mx-auto text-center mb-12 space-y-4">
-            <h1 className="text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-              Blog
-            </h1>
-            <p className="text-xl text-muted-foreground">
-              Thoughts, tutorials, and stories about technology, design, and
-              life
+    <div className="w-full py-8 md:py-16 px-4 md:px-6">
+      <div className="max-w-screen-xl mx-auto">
+        {/* Hero Section */}
+        <div className="max-w-3xl mx-auto text-center mb-12 space-y-4">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+            Blog
+          </h1>
+          <p className="text-base md:text-lg lg:text-xl text-muted-foreground px-2">
+            Thoughts, tutorials, and stories about technology, design, and life
+          </p>
+        </div>
+
+        {/* Search Bar */}
+        <div className="max-w-2xl mx-auto mb-12 px-2">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search posts by title..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 h-12 text-base"
+            />
+          </div>
+          {searchQuery && (
+            <p className="text-sm text-muted-foreground mt-2 text-center">
+              Found {filteredPosts.length}{" "}
+              {filteredPosts.length === 1 ? "post" : "posts"}
             </p>
-          </div>
-
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto mb-12">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search posts by title..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12 text-base"
-              />
-            </div>
-            {searchQuery && (
-              <p className="text-sm text-muted-foreground mt-2 text-center">
-                Found {filteredPosts.length}{" "}
-                {filteredPosts.length === 1 ? "post" : "posts"}
-              </p>
-            )}
-          </div>
-
-          {/* Posts Grid */}
-          {posts.length === 0 ? (
-            <div className="max-w-2xl mx-auto text-center py-20">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted mb-4">
-                <span className="text-3xl">📝</span>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">No posts yet</h3>
-              <p className="text-muted-foreground">
-                Check back soon for new content!
-              </p>
-            </div>
-          ) : filteredPosts.length === 0 ? (
-            <div className="max-w-2xl mx-auto text-center py-20">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted mb-4">
-                <Search className="h-8 w-8 text-muted-foreground" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">No posts found</h3>
-              <p className="text-muted-foreground">
-                Try adjusting your search query
-              </p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-              {filteredPosts.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className="group"
-                >
-                  <article className="h-full flex flex-col bg-card border border-border rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-foreground/20 hover:-translate-y-1">
-                    {/* Card Header with gradient */}
-                    <div className="h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
-
-                    <div className="flex-1 p-6 space-y-4">
-                      {/* Meta Info */}
-                      <div className="flex items-center justify-between gap-2 flex-wrap">
-                        <Badge
-                          variant="secondary"
-                          className="font-medium text-xs"
-                        >
-                          {post.language === "km"
-                            ? "🇰🇭 ភាសាខ្មែរ"
-                            : "🇺🇸 English"}
-                        </Badge>
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Calendar className="h-3 w-3" />
-                          <time>
-                            {new Date(post.date).toLocaleDateString(
-                              post.language === "km" ? "km-KH" : "en-US",
-                              {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                              }
-                            )}
-                          </time>
-                        </div>
-                      </div>
-
-                      {/* Title */}
-                      <h2
-                        className={`text-2xl font-bold tracking-tight line-clamp-2 group-hover:text-primary transition-colors ${
-                          post.language === "km" ? "font-khmer" : ""
-                        }`}
-                      >
-                        {post.title}
-                      </h2>
-
-                      {/* Description */}
-                      <p
-                        className={`text-muted-foreground line-clamp-3 leading-relaxed ${
-                          post.language === "km" ? "font-khmer" : ""
-                        }`}
-                      >
-                        {post.description}
-                      </p>
-
-                      {/* Read More Link */}
-                      <div className="pt-2">
-                        <span className="text-sm font-medium text-primary group-hover:underline inline-flex items-center gap-1">
-                          Read more
-                          <svg
-                            className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 5l7 7-7 7"
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
-              ))}
-            </div>
           )}
         </div>
+
+        {/* Posts Grid */}
+        {posts.length === 0 ? (
+          <div className="max-w-2xl mx-auto text-center py-20">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted mb-4">
+              <span className="text-3xl">📝</span>
+            </div>
+            <h3 className="text-lg font-semibold mb-2">No posts yet</h3>
+            <p className="text-muted-foreground">
+              Check back soon for new content!
+            </p>
+          </div>
+        ) : filteredPosts.length === 0 ? (
+          <div className="max-w-2xl mx-auto text-center py-20">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted mb-4">
+              <Search className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <h3 className="text-lg font-semibold mb-2">No posts found</h3>
+            <p className="text-muted-foreground">
+              Try adjusting your search query
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-7xl mx-auto">
+            {filteredPosts.map((post) => (
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="group"
+              >
+                <article className="h-full flex flex-col bg-card border border-border rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-foreground/20 hover:-translate-y-1">
+                  {/* Card Header with gradient */}
+                  <div className="h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+
+                  <div className="flex-1 p-6 space-y-4">
+                    {/* Meta Info */}
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <Badge
+                        variant="secondary"
+                        className="font-medium text-xs"
+                      >
+                        {post.language === "km" ? "🇰🇭 ភាសាខ្មែរ" : "🇺🇸 English"}
+                      </Badge>
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Calendar className="h-3 w-3" />
+                        <time>
+                          {new Date(post.date).toLocaleDateString(
+                            post.language === "km" ? "km-KH" : "en-US",
+                            {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            }
+                          )}
+                        </time>
+                      </div>
+                    </div>
+
+                    {/* Title */}
+                    <h2
+                      className={`text-2xl font-bold tracking-tight line-clamp-2 group-hover:text-primary transition-colors ${
+                        post.language === "km" ? "font-khmer" : ""
+                      }`}
+                    >
+                      {post.title}
+                    </h2>
+
+                    {/* Description */}
+                    <p
+                      className={`text-muted-foreground line-clamp-3 leading-relaxed ${
+                        post.language === "km" ? "font-khmer" : ""
+                      }`}
+                    >
+                      {post.description}
+                    </p>
+
+                    {/* Read More Link */}
+                    <div className="pt-2">
+                      <span className="text-sm font-medium text-primary group-hover:underline inline-flex items-center gap-1">
+                        Read more
+                        <svg
+                          className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
-    </BlogLayout>
+    </div>
   );
 }
