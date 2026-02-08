@@ -13,7 +13,7 @@ interface BlogSidebarProps {
 export function BlogSidebar({ posts }: BlogSidebarProps) {
   const pathname = usePathname();
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
-    new Set(["Jenkins", "SonarQube"])
+    new Set(["Jenkins", "SonarQube", "Ansible", "NFS"])
   );
   const [sidebarOpen, setSidebarOpen] = useState(false);
 

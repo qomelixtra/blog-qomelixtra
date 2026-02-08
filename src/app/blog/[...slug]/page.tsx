@@ -10,7 +10,7 @@ import { BlogLayout } from "@/components/blog-layout";
 export async function generateStaticParams() {
   const posts = await getAllPosts();
   return posts.map((post) => ({
-    slug: post.slug,
+    slug: post.slug.split("/"),
   }));
 }
 
@@ -23,10 +23,11 @@ function estimateReadTime(content: string): number {
 export default async function BlogPostPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const slugString = slug.join("/");
+  const post = await getPostBySlug(slugString);
   const allPosts = await getAllPosts();
 
   if (!post) {
